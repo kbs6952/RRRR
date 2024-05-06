@@ -624,6 +624,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   isPerformingAction: 0
   applyRootMotin: 0
+  canRotate: 1
+  canMove: 1
+  canCombo: 0
+  playerAnimationManager: {fileID: 0}
+  playerMovemnetManager: {fileID: 0}
 --- !u!1 &413670247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1918,8 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 781a15e490c144941adf6440cf6b6cdd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

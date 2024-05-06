@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerMovemnetManager : MonoBehaviour
 {
+    PlayerManager player;
+
     [Header("플레이어 매니저 스크립트")]
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
 
@@ -37,6 +39,11 @@ public class PlayerController : MonoBehaviour
     [Header("애니메이터")]
     private Animator playerAnimator;                        // 3D 캐릭터의 애니메이션을 실행시켜주기 위한 애니메이션
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        player = GetComponent<PlayerManager>();
+    }
     void Start()
     {
         cCon = GetComponent<CharacterController>();
@@ -48,11 +55,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMove();
+        HandleMovement();
         HandleActionInput();
     }
-    private void PlayerMove()
+    private void HandleMovement()
     {
+        if (player.isPerformingAction) return;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -136,8 +145,8 @@ public class PlayerController : MonoBehaviour
     }
     private void HandleAttackAction()
     {
-        
-        playerAnimator.SetTrigger("doAttack");
+
+        player.playerAnimationManager.PlayerTargetActionAnimation("ATK0", true);
 
     }
    
