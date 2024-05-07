@@ -56,6 +56,7 @@ public class PlayerMovemnetManager : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        HandleComboAttack();
         HandleActionInput();
     }
     private void HandleMovement()
@@ -64,6 +65,9 @@ public class PlayerMovemnetManager : MonoBehaviour
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+
+        //playerAnimator.SetFloat("Horizontal", h, 0.2f, Time.deltaTime);
+       // playerAnimator.SetFloat("Vertical", v, 0.2f, Time.deltaTime);
 
         Vector3 pInput = new Vector3(h, 0, v).normalized;
         float moveAmount = Mathf.Clamp01(Mathf.Abs(h) + Mathf.Abs(v));
@@ -145,9 +149,17 @@ public class PlayerMovemnetManager : MonoBehaviour
     }
     private void HandleAttackAction()
     {
-
-        player.playerAnimationManager.PlayerTargetActionAnimation("ATK0", true);
-
+        player.playerAnimationManager.PlayerTargetActionAnimation("ATK0",true);
+        player.canCombo = true;
+    }
+    private void HandleComboAttack()
+    {
+        if (!player.canCombo) return; // canCombo가 아닐때에는 콤보어택을 못하도록 예외처리
+        // 콤보어택을 위한 입력키 사용
+        if(Input.GetMouseButtonDown(0))
+        {
+            playerAnimator.SetTrigger("doAttack");
+        }
     }
    
 }
